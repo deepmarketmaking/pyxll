@@ -5,10 +5,25 @@
     2. click on **Download ZIP**
     ![](./images/github-download.png?raw=true "")
 3. Extract the zip and copy the `source` folder to your PyXLL installation directory.
-4. Copy the `pyxll.cfg` file to your PyXLL installation directory.
-5. Open `pyxll.cfg` and update the Python executable path:
-    - Find the executable setting and update it to point to your Python installation.
-6. Install dependencies from `requirements.txt` by runing `pip install -r requirements.txt` command in terminal
+4. Update the `pyxll.cfg` file in PyXLL installation folder. 
+    - Find the `executable` setting and update it to point to your Python installation.
+        ![](./images/cfg-executables.png?raw=true "")
+    - Find `pythonpath` and add path to source folder that you've copied `./source`
+      ![](./images/cfg-pythonpath.png?raw=true "")
+    - Find `modules` and add 
+        ```
+        main
+        websocket_handler
+        ui.connection_status_ribbon
+        ui.connection_status_ribbon_config
+        websocket_event_listener
+        subscription_manager
+        ```
+        each on new line
+        ![](./images/cfg-modules.png?raw=true "")
+    - Find `ribbon` and add `./source/ui/ribbon.xml`
+      ![](./images/cfg-ribbon.png?raw=true "")
+5. Install dependencies from `requirements.txt` by runing `pip install -r requirements.txt` command in terminal
 
 
 # Working in excel
