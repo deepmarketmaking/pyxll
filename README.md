@@ -4,7 +4,7 @@
     1. click on **code** button
     2. click on **Download ZIP**
     ![](./images/github-download.png?raw=true "")
-3. Extract the zip and copy the `source` folder to your PyXLL installation directory.
+3. 3. Extract the zip and copy the `source` folder to your PyXLL installation directory (for eaxmple, to C:\Users\<your user name>\AppData\Local\Programs\PyXLL if this is your PyXLL installation location).
 4. Update the `pyxll.cfg` file in PyXLL installation folder. 
     - Find the `executable` setting and update it to point to your Python installation.
         ![](./images/cfg-executables.png?raw=true "")
