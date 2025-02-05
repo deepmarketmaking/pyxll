@@ -1,14 +1,6 @@
-logging
-threading
 pyxll
-time
 websockets
-json
-asyncio
-typing
-datetime
-win32com
+pywin32
 boto3
 requests
-base64
-tkinter
+
