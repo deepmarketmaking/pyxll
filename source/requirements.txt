@@ -1,2 +1,6 @@
+pyxll
 websockets
+pywin32
 boto3
+requests
+
