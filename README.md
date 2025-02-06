@@ -4,11 +4,11 @@
     1. click on **code** button
     2. click on **Download ZIP**
     ![](./images/github-download.png?raw=true "")
-3. Extract the zip and copy the `source` folder to your PyXLL installation directory (for eaxmple, to C:\Users\<your user name>\AppData\Local\Programs\PyXLL if this is your PyXLL installation location).
-4. Update the `pyxll.cfg` file in PyXLL installation folder. 
+3. Extract the zip.
+4. Update the `pyxll.cfg` file in PyXLL installation folder. (You can check pyxll.cfg from zip file for reference)
     - Find the `executable` setting and update it to point to your Python installation.
-        ![](./images/cfg-executables.png?raw=true "")
-    - Find `pythonpath` and add path to source folder that you've copied `./source`
+        ![](./images/config-executable2.png?raw=true "")
+    - Find `pythonpath` and add path to source folder extracted from zip file. For example `C:\Users\<your user name>\deepmm\pyxll\source`
       ![](./images/cfg-pythonpath.png?raw=true "")
     - Find `modules` and add 
         ```
@@ -21,8 +21,8 @@
         ```
         each on new line
         ![](./images/cfg-modules.png?raw=true "")
-    - Find `ribbon` and add `./source/ui/ribbon.xml`
-      ![](./images/cfg-ribbon.png?raw=true "")
+    - Find `ribbon` and add  path to ribbon.xml from source folder `C:\Users\<your user name>\deepmm\pyxll\source\ui\ribbon.xml`
+      ![](./images/config-ribbon2.png?raw=true "")
 5. Install dependencies from `requirements.txt` by runing `pip install -r requirements.txt` command in terminal
 
 
