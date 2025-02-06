@@ -1,5 +1,5 @@
 # Installation
-1. Install PyXLL from [PyXLL Official Site](https://www.pyxll.com/index.html)  
+1. Install PyXLL from [PyXLL Official Site](https://www.pyxll.com/docs/userguide/installation/firsttime.html)  
 2. Download the latest version of code from github:
     1. click on **code** button
     2. click on **Download ZIP**
@@ -7,9 +7,10 @@
 3. Extract the zip.
 4. Update the `pyxll.cfg` file in PyXLL installation folder. (You can check pyxll.cfg from zip file for reference)
     - Find the `executable` setting and update it to point to your Python installation.
-        ![](./images/config-executable2.png?raw=true "")
+        ![](./images/cfg-executables.png?raw=true "")
+         If you're using anaconda installation add path to anaconda, for examle `C:\Users\<your user name>\anaconda3\pythonw.exe`
     - Find `pythonpath` and add path to source folder extracted from zip file. For example `C:\Users\<your user name>\deepmm\pyxll\source`
-      ![](./images/cfg-pythonpath.png?raw=true "")
+      ![](./images/config-executable2.png?raw=true "")
     - Find `modules` and add 
         ```
         main
