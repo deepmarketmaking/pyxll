@@ -44,8 +44,8 @@ class WorksheetEventHandler:
             target (Range): The range of cells that have changed.
         """
         try:
-            start_time = time.time()
-            logging.info('On sheet change event')
+            # start_time = time.time()
+            # logging.info('On sheet change event')
 
             # Determine which worksheet triggered the event.
             try:
@@ -126,15 +126,15 @@ class WorksheetEventHandler:
                 logging.info(f"Change detected in monitored columns {
                              input_columns}. Scheduling subscription update.")
                 self.schedule_subscription_update()
-                elapsed_time = time.time() - start_time
-                logging.info(f"OnChange executed in {
-                             elapsed_time:.3f} seconds.")
+                # elapsed_time = time.time() - start_time
+                # logging.info(f"OnChange executed in {
+                            #  elapsed_time:.3f} seconds.")
             else:
                 logging.debug(
                     "No changes detected in monitored columns. No action taken.")
-                elapsed_time = time.time() - start_time
-                logging.info(f"OnChange executed in {
-                             elapsed_time:.3f} seconds.")
+                # elapsed_time = time.time() - start_time
+                # logging.info(f"OnChange executed in {
+                            #  elapsed_time:.3f} seconds.")
 
         except Exception as e:
             logging.error(f"Error in OnChange: {e}")

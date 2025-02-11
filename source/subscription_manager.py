@@ -5,14 +5,11 @@ from websocket_handler import send_subscribe, send_unsubscribe
 from store.store import store
 from utils.get_figi import get_figi
 # no longer used but kept if needed elsewhere
-from utils.excel import next_column_letter
+from utils.formatting import get_valid_quantity
 
 # Configure module-specific logger
 logger = logging.getLogger(__name__)
 
-# Allowed sizes for quantity validation
-ALLOWED_SIZES = {1000, 10000, 100000, 250000, 500000,
-                 1000000, 2000000, 3000000, 4000000, 5000000}
 
 # Allowed side values
 ALLOWED_SIDES = {"bid", "offer", "dealer"}
@@ -22,22 +19,6 @@ ALLOWED_RFQ_LABELS = {"price", "spread", "ytm"}
 
 # Allowed ats values (uppercase)
 ALLOWED_ATS = {"N", "Y"}
-
-
-def validate_quantity(value):
-    """
-    Validate that the quantity is one of the allowed sizes.
-    Accepts numeric values (possibly as a string) that can be converted to an integer.
-    Returns a tuple: (is_valid, numeric_value)
-    """
-    try:
-        numeric_value = float(value)
-        if numeric_value.is_integer():
-            numeric_value = int(numeric_value)
-        return numeric_value in ALLOWED_SIZES, numeric_value
-    except (ValueError, TypeError):
-        return False, None
-
 
 def is_valid_config(input_parameters):
     """
@@ -167,12 +148,15 @@ class SubscriptionManager:
             # Build new subscriptions for this worksheet.
             new_subscriptions = {}
             for idx in range(len(identifier_values)):
+                logger.info('for loop started')
+                
                 row = start_row + idx
                 identifier = identifier_values[idx]
                 side = side_values[idx]
                 quantity_raw = quantity_values[idx]
                 rfq_label_value = rfq_label_values[idx]
                 ats_value = ats_values[idx]
+                
 
                 if not identifier or not isinstance(identifier, str):
                     logger.debug(
@@ -189,8 +173,8 @@ class SubscriptionManager:
                         f"Row {row} skipped due to invalid side value: {side}")
                     continue
 
-                valid_qty, quantity = validate_quantity(quantity_raw)
-                if not valid_qty or quantity is None:
+                quantity = get_valid_quantity(quantity_raw)
+                if quantity is None:
                     logger.debug(f"Row {row} skipped due to invalid quantity: {
                                  quantity_raw}")
                     continue

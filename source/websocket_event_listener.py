@@ -7,6 +7,7 @@ from pyxll import xl_app, schedule_call
 from websocket_handler import websocket_client
 from utils.get_figi import get_figi
 from store.store import store
+from utils.formatting import get_valid_quantity
 
 # Optional: import formatting helper if needed.
 from utils.formatting import format_price  # optional
@@ -225,7 +226,7 @@ def update_excel_for_sheet(ws, config):
                 figi_val = ident_str
             side_str = str(side_val).strip().lower()
             try:
-                qty_int = int(qty_val)
+                qty_int = get_valid_quantity(int(qty_val))
             except Exception:
                 continue
             # expected to be one of price|spread|ytm
