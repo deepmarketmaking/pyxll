@@ -76,8 +76,7 @@ def update_excel(inferences):
         # Assign the data to the range
         cell_range.Value = data
 
-        logger.info(f"Successfully updated Excel with {
-                    len(inferences)} inferences.")
+        logger.info(f"Successfully updated Excel with {len(inferences)} inferences.")
 
     except Exception as e:
         logger.error(f"Error updating Excel: {e}")
