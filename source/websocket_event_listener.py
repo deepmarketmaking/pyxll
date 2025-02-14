@@ -98,11 +98,9 @@ def batch_update(ws, rows_to_update, fixed_min_col, fixed_max_col, start_row, to
     end_cell = f"{index_to_col(fixed_max_col)}{total_rows}"
     try:
         ws.Range(f"{start_cell}:{end_cell}").Value = block
-        logging.info(f"Batch updated region {start_cell}:{
-                     end_cell} in sheet '{ws.Name}'.")
+        logging.info(f"Batch updated region {start_cell}:{end_cell} in sheet '{ws.Name}'.")
     except Exception as e:
-        logging.error(f"Error in batch updating region {start_cell}:{
-                      end_cell} in sheet '{ws.Name}': {e}")
+        logging.error(f"Error in batch updating region {start_cell}:{end_cell} in sheet '{ws.Name}': {e}")
 
 
 def update_excel_for_sheet(ws, config):
@@ -114,8 +112,7 @@ def update_excel_for_sheet(ws, config):
         logging.info(f"Updating sheet: {ws_name}")
         input_parameters = config.get("input_parameters", {})
         if not input_parameters:
-            logging.error(f"No input_parameters defined for sheet '{
-                          ws_name}'. Skipping.")
+            logging.error(f"No input_parameters defined for sheet '{ws_name}'. Skipping.")
             return
 
         # Determine the configured identifier column.
@@ -123,14 +120,12 @@ def update_excel_for_sheet(ws, config):
         selected_identifier = next(
             (k for k in identifier_types if k in input_parameters and input_parameters[k]), None)
         if not selected_identifier:
-            logging.error(f"No valid identifier type for sheet '{
-                          ws_name}'. Skipping.")
+            logging.error(f"No valid identifier type for sheet '{ws_name}'. Skipping.")
             return
         identifier_column = input_parameters[selected_identifier].strip(
         ).upper()
         if not identifier_column:
-            logging.error(f"Identifier column empty for sheet '{
-                          ws_name}'. Skipping.")
+            logging.error(f"Identifier column empty for sheet '{ws_name}'. Skipping.")
             return
 
         # Retrieve the remaining input columns directly from configuration.
@@ -146,8 +141,7 @@ def update_excel_for_sheet(ws, config):
         # (Add extra spacing by calling next_column_letter twice.)
         output_start_column = next_column_letter(
             next_column_letter(ats_column))
-        logging.info(f"Output region for sheet '{
-                     ws_name}' starts at column {output_start_column}")
+        logging.info(f"Output region for sheet '{ws_name}' starts at column {output_start_column}")
 
         # Define fixed region dimensions for the single inference group.
         group_width = 20   # 1 column for date + 19 for array values.
@@ -171,27 +165,20 @@ def update_excel_for_sheet(ws, config):
             used_range = ws.UsedRange
             total_rows_sheet = used_range.Rows.Count
         except Exception as e:
-            logging.error(f"Error accessing UsedRange for sheet '{
-                          ws_name}': {e}")
+            logging.error(f"Error accessing UsedRange for sheet '{ws_name}': {e}")
             return
         if total_rows_sheet < start_row:
             logging.info(f"No data rows found in sheet '{ws_name}'.")
             return
 
         try:
-            id_range = ws.Range(f"{identifier_column}{start_row}:{
-                                identifier_column}{total_rows_sheet}").Value
-            side_range = ws.Range(f"{side_column}{start_row}:{
-                                  side_column}{total_rows_sheet}").Value
-            qty_range = ws.Range(f"{quantity_column}{start_row}:{
-                                 quantity_column}{total_rows_sheet}").Value
-            rfq_range = ws.Range(f"{rfq_label_column}{start_row}:{
-                                 rfq_label_column}{total_rows_sheet}").Value
-            ats_range = ws.Range(f"{ats_column}{start_row}:{
-                                 ats_column}{total_rows_sheet}").Value
+            id_range = ws.Range(f"{identifier_column}{start_row}:{identifier_column}{total_rows_sheet}").Value
+            side_range = ws.Range(f"{side_column}{start_row}:{side_column}{total_rows_sheet}").Value
+            qty_range = ws.Range(f"{quantity_column}{start_row}:{quantity_column}{total_rows_sheet}").Value
+            rfq_range = ws.Range(f"{rfq_label_column}{start_row}:{rfq_label_column}{total_rows_sheet}").Value
+            ats_range = ws.Range(f"{ats_column}{start_row}:{ats_column}{total_rows_sheet}").Value
         except Exception as e:
-            logging.error(f"Error reading key ranges for sheet '{
-                          ws_name}': {e}")
+            logging.error(f"Error reading key ranges for sheet '{ws_name}': {e}")
             return
 
         def normalize(cell_range):
@@ -262,8 +249,7 @@ def update_excel_for_sheet(ws, config):
                             inf_data[inf_type]["date"].replace("Z", "+00:00"))
                         date_val = dt.strftime("%Y-%m-%d %H:%M:%S")
                     except Exception as e:
-                        logging.warning(f"Error parsing date for key {
-                                        unique_key}: {e}")
+                        logging.warning(f"Error parsing date for key {unique_key}: {e}")
                 rows_to_update[row][output_start_idx] = date_val
                 # Write array values in columns (output_start_idx+1) to (output_start_idx+19).
                 arr = inf_data[inf_type].get(inf_type, [])
@@ -284,8 +270,7 @@ def update_excel_for_sheet(ws, config):
                       fixed_max_col, start_row, total_rows_sheet, index_to_col))
         logging.info(f"Sheet '{ws_name}' updated with inference data.")
     except Exception as e:
-        logging.error(f"Error in update_excel_for_sheet for sheet '{
-                      ws.Name}': {e}")
+        logging.error(f"Error in update_excel_for_sheet for sheet '{ws.Name}': {e}")
 
 
 def update_excel_from_inferences_all():
@@ -311,12 +296,10 @@ def update_excel_from_inferences_all():
                 ws = workbook.Sheets(sheet_name)
                 update_excel_for_sheet(ws, config)
             except Exception as e:
-                logging.error(f"Error updating subscriptions for sheet '{
-                              sheet_name}': {e}")
+                logging.error(f"Error updating subscriptions for sheet '{sheet_name}': {e}")
 
         elapsed_time = time.time() - start_time
-        logging.info(f"update_excel_from_inferences_all executed in {
-                     elapsed_time:.3f} seconds.")
+        logging.info(f"update_excel_from_inferences_all executed in {elapsed_time:.3f} seconds.")
     except Exception as e:
         logging.error(f"Error in update_excel_from_inferences_all: {e}")
     finally:
@@ -376,8 +359,7 @@ def handle_received_message(message):
                 continue
 
             # Build the unique key using the detected inference_type.
-            unique_key = f"{figi_inf}_{side_inf}_{
-                qty_inf}_{inference_type}_{ats_inf}"
+            unique_key = f"{figi_inf}_{side_inf}_{qty_inf}_{inference_type}_{ats_inf}"
             if unique_key not in LATEST_INFERENCES:
                 LATEST_INFERENCES[unique_key] = {
                     "price": None, "spread": None, "ytm": None}
