@@ -120,16 +120,11 @@ class SubscriptionManager:
 
             # Fetch ranges for each column.
             try:
-                identifier_range = ws.Range(f"{identifier_column}{start_row}:{
-                                            identifier_column}{total_rows}").Value
-                side_range = ws.Range(f"{side_column}{start_row}:{
-                                      side_column}{total_rows}").Value
-                quantity_range = ws.Range(f"{quantity_column}{start_row}:{
-                                          quantity_column}{total_rows}").Value
-                rfq_label_range = ws.Range(f"{rfq_label_column}{start_row}:{
-                                           rfq_label_column}{total_rows}").Value
-                ats_range = ws.Range(f"{ats_column}{start_row}:{
-                                     ats_column}{total_rows}").Value
+                identifier_range = ws.Range(f"{identifier_column}{start_row}:{identifier_column}{total_rows}").Value
+                side_range = ws.Range(f"{side_column}{start_row}:{side_column}{total_rows}").Value
+                quantity_range = ws.Range(f"{quantity_column}{start_row}:{quantity_column}{total_rows}").Value
+                rfq_label_range = ws.Range(f"{rfq_label_column}{start_row}:{rfq_label_column}{total_rows}").Value
+                ats_range = ws.Range(f"{ats_column}{start_row}:{ats_column}{total_rows}").Value
             except Exception as e:
                 logger.error(f"Error fetching ranges from Excel: {e}")
                 return
@@ -175,8 +170,7 @@ class SubscriptionManager:
 
                 quantity = get_valid_quantity(quantity_raw)
                 if quantity is None:
-                    logger.debug(f"Row {row} skipped due to invalid quantity: {
-                                 quantity_raw}")
+                    logger.debug(f"Row {row} skipped due to invalid quantity: {quantity_raw}")
                     continue
 
                 if not rfq_label_value or not isinstance(rfq_label_value, str):
@@ -186,8 +180,7 @@ class SubscriptionManager:
                 # Convert rfq_label to lowercase and validate.
                 rfq_label_val = rfq_label_value.strip().lower()
                 if rfq_label_val not in ALLOWED_RFQ_LABELS:
-                    logger.debug(f"Row {row} skipped due to invalid rfq_label value: {
-                                 rfq_label_value}")
+                    logger.debug(f"Row {row} skipped due to invalid rfq_label value: {rfq_label_value}")
                     continue
 
                 if not ats_value or not isinstance(ats_value, str):
@@ -204,8 +197,7 @@ class SubscriptionManager:
                 # Convert identifier to FIGI.
                 figi = get_figi(selected_identifier, identifier_upper)
                 if not figi:
-                    logger.warning(f"Failed to retrieve FIGI for identifier '{
-                                   identifier_upper}' in row {row}. Skipping.")
+                    logger.warning(f"Failed to retrieve FIGI for identifier '{identifier_upper}' in row {row}. Skipping.")
                     continue
 
                 # Create a subscription payload using the row's values.
@@ -221,8 +213,7 @@ class SubscriptionManager:
                 }
                 new_subscriptions[subscription_key] = subscription_payload
 
-            logger.info(f"New subscriptions for worksheet '{ws_name}': {
-                        json.dumps(list(new_subscriptions.keys()), default=str, indent=4)}")
+            logger.info(f"New subscriptions for worksheet '{ws_name}': {json.dumps(list(new_subscriptions.keys()), default=str, indent=4)}")
 
             # Prepare lists for subscribe and unsubscribe messages.
             subscribe_messages = []
@@ -273,16 +264,13 @@ class SubscriptionManager:
 
             if filtered_unsubscribe_messages:
                 send_unsubscribe(filtered_unsubscribe_messages)
-                logger.info(f"Unsubscribed from {len(
-                    filtered_unsubscribe_messages)} subscriptions no longer used by any worksheet.")
+                logger.info(f"Unsubscribed from {len(filtered_unsubscribe_messages)} subscriptions no longer used by any worksheet.")
             if subscribe_messages:
                 send_subscribe(subscribe_messages)
-                logger.info(f"Subscribed to {
-                            len(subscribe_messages)} new subscriptions.")
+                logger.info(f"Subscribed to {len(subscribe_messages)} new subscriptions.")
 
         except Exception as e:
-            logger.error(f"Error in update_subscriptions_for_sheet for worksheet '{
-                         ws.Name}': {e}")
+            logger.error(f"Error in update_subscriptions_for_sheet for worksheet '{ws.Name}': {e}")
 
     @classmethod
     def update_active_worksheet_subscriptions(cls):
@@ -334,8 +322,7 @@ class SubscriptionManager:
                         continue
                     cls.update_subscriptions_for_sheet(ws)
                 except Exception as e:
-                    logger.error(f"Error initializing subscriptions for sheet '{
-                                 sheet_name}': {e}")
+                    logger.error(f"Error initializing subscriptions for sheet '{sheet_name}': {e}")
         except Exception as e:
             logger.error(f"Error in init_subscriptions: {e}")
 
