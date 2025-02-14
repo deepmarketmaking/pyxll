@@ -75,8 +75,7 @@ class WorksheetEventHandler:
                 (k for k in identifier_types if k in input_parameters and input_parameters[k]), None
             )
             if not selected_identifier:
-                logging.error(f"No valid identifier type found in configuration for worksheet '{
-                              sheet_name}'.")
+                logging.error(f"No valid identifier type found in configuration for worksheet '{sheet_name}'.")
                 return
 
             # Retrieve the five columns directly from configuration.
@@ -113,8 +112,7 @@ class WorksheetEventHandler:
                                 column_index).upper()
                             changed_columns.add(column_letter)
                         except Exception as e:
-                            logging.error(f"Error processing cell at row {
-                                          row}, column {col}: {e}")
+                            logging.error(f"Error processing cell at row {row}, column {col}: {e}")
             except Exception as e:
                 logging.error(f"Error iterating through target range: {e}")
                 return
@@ -123,18 +121,15 @@ class WorksheetEventHandler:
 
             # Check if any of the changed columns is one of the key input columns.
             if changed_columns.intersection(set(input_columns)):
-                logging.info(f"Change detected in monitored columns {
-                             input_columns}. Scheduling subscription update.")
+                logging.info(f"Change detected in monitored columns {input_columns}. Scheduling subscription update.")
                 self.schedule_subscription_update()
                 # elapsed_time = time.time() - start_time
-                # logging.info(f"OnChange executed in {
-                            #  elapsed_time:.3f} seconds.")
+                # logging.info(f"OnChange executed in {#  elapsed_time:.3f} seconds.")
             else:
                 logging.debug(
                     "No changes detected in monitored columns. No action taken.")
                 # elapsed_time = time.time() - start_time
-                # logging.info(f"OnChange executed in {
-                            #  elapsed_time:.3f} seconds.")
+                # logging.info(f"OnChange executed in { #  elapsed_time:.3f} seconds.")
 
         except Exception as e:
             logging.error(f"Error in OnChange: {e}")
@@ -150,8 +145,7 @@ class WorksheetEventHandler:
             self.debounce_timer = Timer(
                 self.debounce_interval, self.trigger_subscription_update)
             self.debounce_timer.start()
-            logging.debug(f"Debounce timer started with interval {
-                          self.debounce_interval} seconds.")
+            logging.debug(f"Debounce timer started with interval {self.debounce_interval} seconds.")
 
     def trigger_subscription_update(self):
         """
