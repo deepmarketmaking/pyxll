@@ -38,15 +38,11 @@ def format_price(value, config):
         elif price_type.lower() == 'price':
             formatted_value = f"${numeric_value:.3f}"
         else:
-            logger.error(f"Invalid type '{
-                         price_type}' provided for formatting.")
-            raise ValueError(f"Invalid type '{
-                             price_type}'. Expected 'price', 'ytm', or 'spread'.")
+            logger.error(f"Invalid type '{price_type}' provided for formatting.")
+            raise ValueError(f"Invalid type '{price_type}'. Expected 'price', 'ytm', or 'spread'.")
     except Exception as e:
-        logger.error(f"Error formatting value '{
-                     value}' with type '{price_type}': {e}")
-        raise ValueError(f"Error formatting value '{
-                         value}' with type '{price_type}'.") from e
+        logger.error(f"Error formatting value '{value}' with type '{price_type}': {e}")
+        raise ValueError(f"Error formatting value '{value}' with type '{price_type}'.") from e
 
     logger.debug(f"Formatted value: {formatted_value} (Type: {price_type})")
     return formatted_value
