@@ -42,13 +42,11 @@ def load_figi_data():
                     if cusip:
                         cusip_upper = cusip.upper()
                         cusip_to_figi[cusip_upper] = figi.upper()
-                        logging.debug(f"Mapped CUSIP '{
-                                      cusip_upper}' to FIGI '{figi.upper()}'")
+                        logging.debug(f"Mapped CUSIP '{cusip_upper}' to FIGI '{figi.upper()}'")
                     if isin:
                         isin_upper = isin.upper()
                         isin_to_figi[isin_upper] = figi.upper()
-                        logging.debug(f"Mapped ISIN '{
-                                      isin_upper}' to FIGI '{figi.upper()}'")
+                        logging.debug(f"Mapped ISIN '{isin_upper}' to FIGI '{figi.upper()}'")
             figi_data_loaded = True
             logging.info("FIGI data loaded and mappings created successfully.")
         except requests.exceptions.RequestException as e:
@@ -56,8 +54,7 @@ def load_figi_data():
         except json.JSONDecodeError as e:
             logging.error(f"Failed to parse FIGI JSON data: {e}")
         except Exception as e:
-            logging.error(
-                f"An unexpected error occurred while loading FIGI data: {e}")
+            logging.error(f"An unexpected error occurred while loading FIGI data: {e}")
 
 
 def cusipToFigi(cusip):
@@ -118,26 +115,22 @@ def get_figi(identifier_type, identifier_value):
     val_upper = identifier_value.upper()
 
     if identifier_type == 'figi':
-        logging.debug(f"Identifier type is FIGI. Using FIGI: {
-                      identifier_value}")
+        logging.debug(f"Identifier type is FIGI. Using FIGI: {identifier_value}")
         return val_upper
     elif identifier_type == 'cusip':
         figi = cusipToFigi(val_upper)
         if figi:
             return figi
         else:
-            logging.warning(f"Failed to convert CUSIP '{
-                            identifier_value}' to FIGI.")
+            logging.warning(f"Failed to convert CUSIP '{identifier_value}' to FIGI.")
             return ""
     elif identifier_type == 'isin':
         figi = isinToFigi(val_upper)
         if figi:
             return figi
         else:
-            logging.warning(f"Failed to convert ISIN '{
-                            identifier_value}' to FIGI.")
+            logging.warning(f"Failed to convert ISIN '{identifier_value}' to FIGI.")
             return ""
     else:
-        logging.error(f"Unknown identifier type: '{
-                      identifier_type}'. Cannot retrieve FIGI.")
+        logging.error(f"Unknown identifier type: '{identifier_type}'. Cannot retrieve FIGI.")
         return ""
