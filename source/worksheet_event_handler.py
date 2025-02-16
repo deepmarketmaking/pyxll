@@ -59,14 +59,12 @@ class WorksheetEventHandler:
             # Fetch configuration for the active worksheet.
             config = store.worksheet_configurations.get(sheet_name)
             if not config:
-                logging.error(
-                    f"No configuration found for worksheet '{sheet_name}'.")
+                logging.error(f"No configuration found for worksheet '{sheet_name}'.")
                 return
 
             input_parameters = config.get("input_parameters", {})
             if not input_parameters:
-                logging.error(
-                    f"No input_parameters defined for worksheet '{sheet_name}'.")
+                logging.error(f"No input_parameters defined for worksheet '{sheet_name}'.")
                 return
 
             # Determine the configured identifier column.

@@ -152,8 +152,7 @@ def configure_data_mapping():
             identifier_column = identifier_column_var.get().strip().upper()
 
             if identifier_type not in ['figi', 'cusip', 'isin']:
-                messagebox.showerror("Validation Error",
-                                     f"Invalid Identifier Type selected: {identifier_type}")
+                messagebox.showerror("Validation Error", f"Invalid Identifier Type selected: {identifier_type}")
                 return
             if not identifier_column:
                 messagebox.showerror("Validation Error",
@@ -179,8 +178,7 @@ def configure_data_mapping():
             }
 
             store.save_configurations_to_docproperty()
-            logging.info(f"Configuration for '{active_worksheet}' saved: {
-                         json.dumps(input_data, indent=4)}")
+            logging.info(f"Configuration for '{active_worksheet}' saved: {json.dumps(input_data, indent=4)}")
 
             # Trigger any subscription updates
             schedule_call(

@@ -154,8 +154,7 @@ class SubscriptionManager:
                 
 
                 if not identifier or not isinstance(identifier, str):
-                    logger.debug(
-                        f"Row {row} skipped due to empty or invalid identifier.")
+                    logger.debug(f"Row {row} skipped due to empty or invalid identifier.")
                     continue
                 identifier_upper = identifier.strip().upper()
 
@@ -164,8 +163,7 @@ class SubscriptionManager:
                     continue
                 side_lower = side.strip().lower()
                 if side_lower not in ALLOWED_SIDES:
-                    logger.debug(
-                        f"Row {row} skipped due to invalid side value: {side}")
+                    logger.debug(f"Row {row} skipped due to invalid side value: {side}")
                     continue
 
                 quantity = get_valid_quantity(quantity_raw)
@@ -174,8 +172,7 @@ class SubscriptionManager:
                     continue
 
                 if not rfq_label_value or not isinstance(rfq_label_value, str):
-                    logger.debug(
-                        f"Row {row} skipped due to empty or invalid label value.")
+                    logger.debug(f"Row {row} skipped due to empty or invalid label value.")
                     continue
                 # Convert rfq_label to lowercase and validate.
                 rfq_label_val = rfq_label_value.strip().lower()
@@ -184,14 +181,12 @@ class SubscriptionManager:
                     continue
 
                 if not ats_value or not isinstance(ats_value, str):
-                    logger.debug(
-                        f"Row {row} skipped due to empty or invalid ATS value.")
+                    logger.debug(f"Row {row} skipped due to empty or invalid ATS value.")
                     continue
                 # Convert ats to uppercase and validate.
                 ats_val = ats_value.strip().upper()
                 if ats_val not in ALLOWED_ATS:
-                    logger.debug(
-                        f"Row {row} skipped due to invalid ATS value: {ats_value}")
+                    logger.debug(f"Row {row} skipped due to invalid ATS value: {ats_value}")
                     continue
 
                 # Convert identifier to FIGI.
@@ -289,8 +284,7 @@ class SubscriptionManager:
             active_ws = workbook.ActiveSheet
             cls.update_subscriptions_for_sheet(active_ws)
         except Exception as e:
-            logger.error(
-                f"Error in update_active_worksheet_subscriptions: {e}")
+            logger.error(f"Error in update_active_worksheet_subscriptions: {e}")
 
     @classmethod
     def init_subscriptions(cls):
@@ -317,8 +311,7 @@ class SubscriptionManager:
                     try:
                         ws = workbook.Sheets(sheet_name)
                     except Exception:
-                        logger.warning(
-                            f"Worksheet '{sheet_name}' does not exist. Skipping.")
+                        logger.warning(f"Worksheet '{sheet_name}' does not exist. Skipping.")
                         continue
                     cls.update_subscriptions_for_sheet(ws)
                 except Exception as e:

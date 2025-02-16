@@ -25,22 +25,18 @@ class Store:
             props = wb.CustomDocumentProperties
             try:
                 config_json = props(cls.CONFIG_PROPERTY).Value
-                logging.info(f"Configurations loaded from custom document property '{
-                    cls.CONFIG_PROPERTY}'.")
+                logging.info(f"Configurations loaded from custom document property '{cls.CONFIG_PROPERTY}'.")
             except Exception:
                 # Property doesn't exist; use an empty configuration
                 config_json = "{}"
-                logging.info(f"Custom document property '{
-                    cls.CONFIG_PROPERTY}' not found. Using empty configuration.")
+                logging.info(f"Custom document property '{cls.CONFIG_PROPERTY}' not found. Using empty configuration.")
 
             # Parse JSON
             cls.worksheet_configurations = json.loads(config_json)
         except Exception as e:
             cls.worksheet_configurations = {}
-            logging.error(
-                f"Error loading configurations from custom document property: {e}")
-            messagebox.showerror("Configuration Error",
-                                 f"An error occurred while loading configurations: {e}")
+            logging.error(f"Error loading configurations from custom document property: {e}")
+            messagebox.showerror("Configuration Error", f"An error occurred while loading configurations: {e}")
 
     def save_configurations_to_docproperty(cls):
         """Save all worksheet configurations as JSON into a custom document property."""
@@ -53,21 +49,17 @@ class Store:
             try:
                 # Try to update the property if it already exists.
                 props(cls.CONFIG_PROPERTY).Value = config_json
-                logging.info(f"Updated custom document property '{
-                    cls.CONFIG_PROPERTY}'.")
+                logging.info(f"Updated custom document property '{cls.CONFIG_PROPERTY}'.")
             except Exception:
                 # If it doesn't exist, add it using positional arguments.
                 props.Add(cls.CONFIG_PROPERTY, False, 4, config_json)
-                logging.info(f"Created custom document property '{
-                    cls.CONFIG_PROPERTY}'.")
+                logging.info(f"Created custom document property '{cls.CONFIG_PROPERTY}'.")
 
             # Explicitly save the workbook so the changes persist.
             # wb.Save()
         except Exception as e:
-            logging.error(
-                f"Error saving configurations to custom document property: {e}")
-            messagebox.showerror("Configuration Error",
-                                 f"An error occurred while saving configurations: {e}")
+            logging.error(f"Error saving configurations to custom document property: {e}")
+            messagebox.showerror("Configuration Error", f"An error occurred while saving configurations: {e}")
 
     def get_worksheet_config_or_default(cls):
         """Get the configuration for the current active worksheet."""
@@ -92,14 +84,12 @@ class Store:
                 return
 
             # Ask for confirmation
-            if not messagebox.askyesno("Clear Configuration",
-                                       f"Are you sure you want to clear the configuration for worksheet '{sheet_name}'?"):
+            if not messagebox.askyesno("Clear Configuration", f"Are you sure you want to clear the configuration for worksheet '{sheet_name}'?"):
                 return
 
             # Remove the configuration from the store
             del store.worksheet_configurations[sheet_name]
-            logging.info(f"Configuration for '{
-                         sheet_name}' cleared from the in-memory store.")
+            logging.info(f"Configuration for '{sheet_name}' cleared from the in-memory store.")
 
             # Save the updated configuration back to the custom document property.
             cls.save_configurations_to_docproperty()
